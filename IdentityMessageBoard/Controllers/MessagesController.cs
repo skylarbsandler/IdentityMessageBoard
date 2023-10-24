@@ -61,8 +61,27 @@ namespace IdentityMessageBoard.Controllers
         [Authorize]
         public IActionResult Create(string userId, string content, int expiresIn)
         {
+            if (userId == null)
+            {
+                return NotFound();
+            }
+
+            if (content == null)
+            {
+                return NotFound();
+            }
+
+            if (expiresIn == null)
+            {
+                return NotFound();
+            }
 
             var user = _context.ApplicationUsers.Find(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
 
             _context.Messages.Add(
                 new Message()
